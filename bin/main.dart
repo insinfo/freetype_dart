@@ -55,6 +55,8 @@ void main(List<String> args) {
   final y = HEIGHT - glyph.bitmap_top;
   final bitmap = glyph.bitmap;
 
+  print('glyph ${glyph}');
+
   final figure = drawBitmap(bitmap, x, y);
   for (var row in figure) {
     for (var v in row) {
@@ -81,8 +83,9 @@ typedef Figure = List<List<int>>;
 Figure drawBitmap(FT_Bitmap bitmap, int x, int y) {
   var figure = List.generate(HEIGHT, (_) => List.filled(WIDTH, 0));
   var w = bitmap.width;
-  var xMax = x + w;
-  var yMax = y + bitmap.rows;
+  // var xMax = x + w;
+  // var yMax = y + bitmap.rows;
+  var data = bitmap.bufferAsList;
 
   for (var p = 0; p < w; p++) {
     for (var q = 0; q < bitmap.rows; q++) {
@@ -91,7 +94,7 @@ Figure drawBitmap(FT_Bitmap bitmap, int x, int y) {
       if (i < 0 || j < 0 || i >= WIDTH || j >= HEIGHT) {
         continue;
       }
-      figure[j][i] |= bitmap.bufferAsList[q * w + p];
+      figure[j][i] |= data[q * w + p];
     }
   }
   return figure;

@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'structs/constants.dart';
 import 'structs/typedefs.dart';
 
 // manual Bindings
@@ -95,6 +96,11 @@ class FeetypeBindings {
             Pointer<FT_Face> aface,
           )>();
 
+  /// [face]  handle to face object         
+  /// [char_width] char_width in 1/64 of points   
+  /// [char_height]  char_height in 1/64 of points  
+  /// [horz_resolution]   horizontal device resolution   
+  /// [vert_resolution]   vertical device resolution     
   late final FT_Set_Char_Size = _lookup<
           NativeFunction<
               FT_Error Function(
@@ -127,5 +133,114 @@ class FeetypeBindings {
             int load_flags,
           )>();
 
+  late final FT_Set_Pixel_Sizes = _lookup<
+          NativeFunction<
+              FT_Error Function(
+                FT_Face face,
+                FT_UInt pixel_width,
+                FT_UInt pixel_height,
+              )>>('FT_Set_Pixel_Sizes')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            int pixel_width,
+            int pixel_height,
+          )>();
 
+  late final FT_Get_Char_Index = _lookup<
+          NativeFunction<
+              FT_Error Function(
+                FT_Face face,
+                FT_ULong charcode,
+              )>>('FT_Get_Char_Index')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            int charcode,
+          )>();
+
+  late final FT_Load_Glyph = _lookup<
+          NativeFunction<
+              FT_Error Function(
+                FT_Face face,
+                FT_UInt glyph_index,
+                FT_Int32 load_flags,
+              )>>('FT_Load_Glyph')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            int glyph_index,
+            int load_flags,
+          )>();
+
+  late final FT_Render_Glyph = _lookup<
+          NativeFunction<
+              FT_Error Function(
+                FT_GlyphSlot slot,
+                FT_Render_Mode render_mode,
+              )>>('FT_Render_Glyph')
+      .asFunction<
+          int Function(
+            FT_GlyphSlot slot,
+            int render_mode,
+          )>();
+
+  late final FT_Done_Face =
+      _lookup<NativeFunction<FT_Error Function(FT_Face face)>>(
+              'FT_Render_Glyph')
+          .asFunction<int Function(FT_Face face)>();
+
+  late final FT_Get_First_Char = _lookup<
+          NativeFunction<
+              FT_ULong Function(
+                FT_Face face,
+                Pointer<FT_UInt> agindex,
+              )>>('FT_Get_First_Char')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            Pointer<FT_UInt> agindex,
+          )>();
+
+  late final FT_Get_Next_Char = _lookup<
+          NativeFunction<
+              FT_ULong Function(
+                FT_Face face,
+                FT_ULong char_code,
+                Pointer<FT_UInt> agindex,
+              )>>('FT_Get_Next_Char')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            int char_code,
+            Pointer<FT_UInt> agindex,
+          )>();
+
+  late final FT_Select_Charmap = _lookup<
+          NativeFunction<
+              FT_ULong Function(
+                FT_Face face,
+                FT_Encoding encoding,
+              )>>('FT_Select_Charmap')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            int encoding,
+          )>();
+
+  late final FT_Get_Glyph_Name = _lookup<
+          NativeFunction<
+              FT_ULong Function(
+                FT_Face face,
+                FT_UInt glyph_index,
+                FT_Pointer buffer,
+                FT_UInt buffer_max,
+              )>>('FT_Get_Glyph_Name')
+      .asFunction<
+          int Function(
+            FT_Face face,
+            int glyph_index,
+            FT_Pointer buffer,
+            int buffer_max,
+          )>();
 }

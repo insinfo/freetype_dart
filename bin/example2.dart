@@ -1,9 +1,3 @@
-#### freetype dart bindings
-
-
-##### example
-
-```dart
 import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
@@ -114,7 +108,3 @@ void main(List<String> args) {
   // Write the PNG formatted data to a file.
   File('image.png').writeAsBytesSync(png);
 }
-
-```
-
-![result](https://github.com/insinfo/freetype_dart/blob/main/image.png?raw=true)
