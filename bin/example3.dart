@@ -60,7 +60,7 @@ void main(List<String> args) {
     print('código de caractere indefinido');
   }
   print("glyph_index $glyph_index");
-// Set font size x pixels
+// Set font size in pixels
   err = ft.FT_Set_Pixel_Sizes(face.value, 0, HEIGHT);
   print("FT_Set_Pixel_Sizes $err");
   //0,       16*64,   300,    300

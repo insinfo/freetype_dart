@@ -1,4 +1,7 @@
 import 'dart:ffi';
+import 'package:freetype_dart/src/structs/matrix.dart';
+import 'package:freetype_dart/src/structs/vector.dart';
+
 import 'structs/constants.dart';
 import 'structs/typedefs.dart';
 
@@ -16,8 +19,9 @@ class FeetypeBindings {
               'FT_Init_FreeType')
           .asFunction<int Function(Pointer<FT_Library> library)>();
 
+//pub fn FT_Done_FreeType(library: FT_Library) -> FT_Error;
   late final FT_Done_FreeType =
-      _lookup<NativeFunction<Int Function(FT_Library library)>>(
+      _lookup<NativeFunction<FT_Error Function(FT_Library library)>>(
               'FT_Done_FreeType')
           .asFunction<int Function(FT_Library library)>();
 
@@ -96,11 +100,11 @@ class FeetypeBindings {
             Pointer<FT_Face> aface,
           )>();
 
-  /// [face]  handle to face object         
-  /// [char_width] char_width in 1/64 of points   
-  /// [char_height]  char_height in 1/64 of points  
-  /// [horz_resolution]   horizontal device resolution   
-  /// [vert_resolution]   vertical device resolution     
+  /// [face]  handle to face object
+  /// [char_width] char_width in 1/64 of points
+  /// [char_height]  char_height in 1/64 of points
+  /// [horz_resolution]   horizontal device resolution
+  /// [vert_resolution]   vertical device resolution
   late final FT_Set_Char_Size = _lookup<
           NativeFunction<
               FT_Error Function(
@@ -243,4 +247,20 @@ class FeetypeBindings {
             FT_Pointer buffer,
             int buffer_max,
           )>();
+
+  late final FT_Set_Transform = _lookup<
+          NativeFunction<
+              Void Function(
+                FT_Face face,
+                Pointer<FT_Matrix> matrix,
+                Pointer<FT_Vector> delta,
+              )>>('FT_Set_Transform')
+      .asFunction<
+          void Function(
+            FT_Face face,
+            Pointer<FT_Matrix> matrix,
+            Pointer<FT_Vector> delta,
+          )>();
+
+  //pub fn FT_Set_Transform(face: FT_Face, matrix: *mut FT_Matrix, delta: *mut FT_Vector);
 }
