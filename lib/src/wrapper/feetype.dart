@@ -10,7 +10,7 @@ import '../bindings_manual.dart';
 import '../structs/bitmap.dart';
 import '../structs/constants.dart';
 import '../structs/errors.dart';
-import '../structs/face_rec.dart';
+
 import '../structs/typedefs.dart';
 
 /// Feetype high level API
