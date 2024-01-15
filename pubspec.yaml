@@ -11,12 +11,22 @@ dependencies:
 dev_dependencies:
 
 
+# ffigen:
+#   llvm-path:  
+#   - 'C:\llvm'
+#   output: 'lib/src/generated_bindings_beta.dart'
+#   headers:
+#     entry-points:
+#       #- 'C:\MyProjectsDart\freetype\freetype\include\merged.h'    
+#       #https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/VER-2-BETA2
+#       - 'C:\MyProjectsDart\freetype\include_ver_2_beta_2\freetype.h'   
+
 ffigen:
   llvm-path:  
   - 'C:\llvm'
-  output: 'lib/src/generated_bindings_beta.dart'
+  output: 'lib/src/pq/generated_bindings_pq.dart'
   headers:
     entry-points:
       #- 'C:\MyProjectsDart\freetype\freetype\include\merged.h'    
       #https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/VER-2-BETA2
-      - 'C:\MyProjectsDart\freetype\include_ver_2_beta_2\freetype.h'   
+      - 'C:\MyProjectsDart\freetype\include_pq\libpq-fs.h'  
