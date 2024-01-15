@@ -6,7 +6,16 @@ import 'typedefs.dart';
 //     pub xMax: FT_Pos,
 //     pub yMax: FT_Pos,
 // }
+
+//  typedef struct  FT_BBox_
+//   {
+//     FT_Pos  xMin, yMin;
+//     FT_Pos  xMax, yMax;
+
+//   } FT_BBox;
+
 /// size 16
+/// c++ size 32
 final class FT_BBox extends Struct {
   @FT_Pos()
   external int xMin;

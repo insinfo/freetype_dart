@@ -8,7 +8,17 @@ import 'typedefs.dart';
 //     pub top: FT_Int,
 //     pub bitmap: FT_Bitmap,
 // }
+
+// typedef struct  FT_BitmapGlyphRec_
+// {
+//   FT_GlyphRec  root;
+//   FT_Int       left;
+//   FT_Int       top;
+//   FT_Bitmap    bitmap;
+// } FT_BitmapGlyphRec;
+
 /// size 80
+/// c++ size 88
 final class FT_BitmapGlyphRec extends Struct {
   external FT_GlyphRec root;
   @FT_Int()

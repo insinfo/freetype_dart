@@ -30,13 +30,43 @@ import 'vector.dart';
 //     pub other: *mut c_void,
 //     pub internal: FT_Slot_Internal,
 // }
+
+//  typedef struct  FT_GlyphSlotRec_
+//   {
+//     FT_Library        library;
+//     FT_Face           face;
+//     FT_GlyphSlot      next;
+//     FT_UInt           glyph_index; /* new in 2.10; was reserved previously */
+//     FT_Generic        generic;
+//     FT_Glyph_Metrics  metrics;
+//     FT_Fixed          linearHoriAdvance;
+//     FT_Fixed          linearVertAdvance;
+//     FT_Vector         advance;
+//     FT_Glyph_Format   format;
+//     FT_Bitmap         bitmap;
+//     FT_Int            bitmap_left;
+//     FT_Int            bitmap_top;
+//     FT_Outline        outline;
+//     FT_UInt           num_subglyphs;
+//     FT_SubGlyph       subglyphs;
+//     void*             control_data;
+//     long              control_len;
+//     FT_Pos            lsb_delta;
+//     FT_Pos            rsb_delta;
+//     void*             other;
+//     FT_Slot_Internal  internal;
+
+//   } FT_GlyphSlotRec;
+
 /// size 248
+/// c++ size 304
 final class FT_GlyphSlotRec extends Struct {
   external FT_Library library;
   external FT_Face face;
   external FT_GlyphSlot next;
+  /// new in 2.10; was reserved previously 
   @FT_UInt()
-  external int reserved;
+  external int glyph_index;
   external FT_Generic generic;
   external FT_Glyph_Metrics metrics;
   @FT_Fixed()
@@ -54,13 +84,15 @@ final class FT_GlyphSlotRec extends Struct {
   external FT_Outline outline;
   @FT_UInt()
   external int num_subglyphs;
-  external Pointer<FT_SubGlyph> subglyphs;
-  external Pointer<c_void> control_data;
-  external Pointer<Void> control_len;
+  external FT_SubGlyph subglyphs;
+  external Pointer<Void> control_data;
+
+  @Int64()
+  external int control_len;
   @FT_Pos()
   external int lsb_delta;
   @FT_Pos()
   external int rsb_delta;
-  external Pointer<c_void> other;
+  external Pointer<Void> other;
   external FT_Slot_Internal internal;
 }

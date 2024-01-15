@@ -1,32 +1,28 @@
 name: freetype_dart
 
 environment:
-  sdk: '>=3.0.0 < 4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
-dependencies:
-  ffi: any
-  ffigen: any
+dependencies: 
+  path: ^1.9.0
   image: ^4.1.4
+  ffi: ^2.1.0
+  ffigen: ^11.0.0
 
-dev_dependencies:
+#dev_dependencies:
 
 
 # ffigen:
+#   name: 'FreetypeBinding'
 #   llvm-path:  
-#   - 'C:\llvm'
-#   output: 'lib/src/generated_bindings_beta.dart'
+#     - 'C:\llvm'
+#   output: 'lib/src/generated_bindings.dart'
 #   headers:
-#     entry-points:
-#       #- 'C:\MyProjectsDart\freetype\freetype\include\merged.h'    
-#       #https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/VER-2-BETA2
-#       - 'C:\MyProjectsDart\freetype\include_ver_2_beta_2\freetype.h'   
+#     entry-points:            
+#       - 'C:\MyProjectsDart\freetype\include\freetype\freetype.h' 
+#       - 'C:\MyProjectsDart\freetype\include\freetype\ftglyph.h' 
+#       - 'C:\MyProjectsDart\freetype\include\freetype\ftsystem.h'
+#       - 'C:\MyProjectsDart\freetype\include\freetype\ft2build.h'   
+#     include-directives:
+#       - 'C:\MyProjectsDart\freetype\include\**'
 
-ffigen:
-  llvm-path:  
-  - 'C:\llvm'
-  output: 'lib/src/pq/generated_bindings_pq.dart'
-  headers:
-    entry-points:
-      #- 'C:\MyProjectsDart\freetype\freetype\include\merged.h'    
-      #https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/VER-2-BETA2
-      - 'C:\MyProjectsDart\freetype\include_pq\libpq-fs.h'  

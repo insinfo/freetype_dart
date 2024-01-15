@@ -12,8 +12,8 @@ import 'package:freetype_dart/src/structs/typedefs.dart';
 void main(List<String> args) {
   //print('size ${sizeOf<FT_Vector>()}');
 
-  final dylib =
-      DynamicLibrary.open(r'C:\MyProjectsDart\freetype\libfreetype-6.dll');
+  final dylib = DynamicLibrary.open(
+      Platform.isWindows ? 'freetype.dll' : 'libfreetype.so.6');
 
   final ft = FeetypeBindings(dylib);
 
@@ -29,8 +29,7 @@ void main(List<String> args) {
   print('FT_Add_Default_Modules $err');
 
   final face = calloc<FT_Face>();
-  err = ft.FT_New_Face(library.value,
-      "C:/MyProjectsDart/freetype/VeraMono.ttf".asInt8(), 0, face);
+  err = ft.FT_New_Face(library.value, "VeraMono.ttf".asCharP(), 0, face);
 
   if (err == FT_Err_Unknown_File_Format) {
     print("Font format is unsupported");

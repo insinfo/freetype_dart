@@ -41,8 +41,66 @@ import 'typedefs.dart';
 //     /* @private end */
 // }
 
+// typedef struct  FT_FaceRec_
+//   {
+//     FT_Long           num_faces;
+//     FT_Long           face_index;
+
+//     FT_Long           face_flags;
+//     FT_Long           style_flags;
+
+//     FT_Long           num_glyphs;
+
+//     FT_String*        family_name;
+//     FT_String*        style_name;
+
+//     FT_Int            num_fixed_sizes;
+//     FT_Bitmap_Size*   available_sizes;
+
+//     FT_Int            num_charmaps;
+//     FT_CharMap*       charmaps;
+
+//     FT_Generic        generic;
+
+//     /* The following member variables (down to `underline_thickness`) */
+//     /* are only relevant to scalable outlines; cf. @FT_Bitmap_Size    */
+//     /* for bitmap fonts.                                              */
+//     FT_BBox           bbox;
+
+//     FT_UShort         units_per_EM;
+//     FT_Short          ascender;
+//     FT_Short          descender;
+//     FT_Short          height;
+
+//     FT_Short          max_advance_width;
+//     FT_Short          max_advance_height;
+
+//     FT_Short          underline_position;
+//     FT_Short          underline_thickness;
+
+//     FT_GlyphSlot      glyph;
+//     FT_Size           size;
+//     FT_CharMap        charmap;
+
+//     /* private fields, internal to FreeType */
+
+//     FT_Driver         driver;
+//     FT_Memory         memory;
+//     FT_Stream         stream;
+
+//     FT_ListRec        sizes_list;
+
+//     FT_Generic        autohint;   /* face-specific auto-hinter data */
+//     void*             extensions; /* unused                         */
+
+//     FT_Face_Internal  internal;
+
+//   } FT_FaceRec;
+
+// c++ size 248
 /// size 216
 final class FT_FaceRec extends Struct {
+  //FT_Long is a 32-bit integer size 8
   @FT_Long()
   external int num_faces;
   @FT_Long()
@@ -53,10 +111,13 @@ final class FT_FaceRec extends Struct {
   external int style_flags;
   @FT_Long()
   external int num_glyphs;
+  // typedef char  FT_String;
   external Pointer<FT_String> family_name;
   external Pointer<FT_String> style_name;
+
   @FT_Int()
   external int num_fixed_sizes;
+  // FT_Bitmap_Size = 32
   external Pointer<FT_Bitmap_Size> available_sizes;
   @FT_Int()
   external int num_charmaps;
@@ -82,6 +143,7 @@ final class FT_FaceRec extends Struct {
   external FT_GlyphSlot glyph;
   external FT_Size size;
   external FT_CharMap charmap;
+  // private fields, internal to FreeType
   external FT_Driver driver;
   external FT_Memory memory;
   external FT_Stream stream;

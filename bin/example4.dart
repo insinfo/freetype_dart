@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:freetype_dart/src/wrapper/feetype.dart';
+import 'package:freetype_dart/src/wrapper/freetype.dart';
 import 'dart:io';
 import 'package:image/image.dart' as img;
 
@@ -14,9 +14,9 @@ final image = img.Image(
 
 void main(List<String> args) {
   image.clear(img.ColorRgb8(255, 255, 255));
-  
-  final ft = Feetype();
-  final face = ft.newFace('C:/MyProjectsDart/freetype/VeraMono.ttf');
+
+  final ft = Freetype();
+  final face = ft.newFace('VeraMono.ttf');
   print(face.familyName);
   face.setCharSize(fontSize * 64, 0, 100, 0);
   //face.setPixelSizes(0, fontSize);
@@ -46,23 +46,23 @@ void main(List<String> args) {
     final glyph = face.glyph;
     final bitmap = glyph.bitmap();
 
-    final x = glyph.bitmapLeft; 
-    final y = target_height - glyph.bitmapTop; 
-    drawBitmap(bitmap, x, y, x, y);
+    final x = glyph.bitmapLeft;
+    final y = target_height - glyph.bitmapTop;
+    drawBitmap(bitmap, x, y);
 
     // increment pen position
     pen.x += glyph.advance.x;
     pen.y += glyph.advance.y;
   }
 
-  
-  ft.free();  
-
   final png = img.encodePng(image);
   File('image4.png').writeAsBytesSync(png);
+
+  //face.free();
+  ft.free();
 }
 
-void drawBitmap(Bitmap bitmap, int x, int y, int xx, int yy) {
+void drawBitmap(Bitmap bitmap, int x, int y) {
   var w = bitmap.width;
   var xMax = w;
   var yMax = bitmap.rows;

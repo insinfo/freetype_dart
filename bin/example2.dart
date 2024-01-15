@@ -16,8 +16,8 @@ void printf(object) {
 }
 
 void main(List<String> args) {
-  final dylib =
-      DynamicLibrary.open(r'C:\MyProjectsDart\freetype\libfreetype-6.dll');
+ final dylib = DynamicLibrary.open(
+      Platform.isWindows ? 'freetype.dll' : 'libfreetype.so.6');
 
   final ft = FeetypeBindings(dylib);
 
@@ -31,8 +31,7 @@ void main(List<String> args) {
   ft.FT_Add_Default_Modules(library.value);
 
   final face = calloc<FT_Face>();
-  err = ft.FT_New_Face(library.value,
-      "C:/MyProjectsDart/freetype/VeraMono.ttf".asInt8(), 0, face);
+  err = ft.FT_New_Face(library.value, "VeraMono.ttf".asCharP(), 0, face);
 
   if (err == FT_Err_Unknown_File_Format) {
     print("Font format is unsupported");
@@ -93,7 +92,7 @@ void main(List<String> args) {
   }
 
   final buffer =
-      bitmap.buffer.asTypedList((bitmap.pitch * bitmap.rows).toInt());
+      bitmap.buffer.cast<Int8>().asTypedList((bitmap.pitch * bitmap.rows).toInt());
 
   // Create a 256x256 8-bit (default) rgb (default) image.
   final image = img.Image.fromBytes(

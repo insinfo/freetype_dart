@@ -1,5 +1,5 @@
 import 'dart:ffi';
-import 'typedefs.dart';
+
 
 // pub struct FT_Bitmap {
 //     pub rows: c_int,
@@ -11,30 +11,43 @@ import 'typedefs.dart';
 //     pub palette_mode: c_char,
 //     pub palette: *mut c_void,
 // }
+
+//  typedef struct  FT_Bitmap_
+//   {
+//     unsigned int    rows;
+//     unsigned int    width;
+//     int             pitch;
+//     unsigned char*  buffer;
+//     unsigned short  num_grays;
+//     unsigned char   pixel_mode;
+//     unsigned char   palette_mode;
+//     void*           palette;
+//   } FT_Bitmap;
+
 /// size 40
 final class FT_Bitmap extends Struct {
-  @c_int()
+  @UnsignedInt()
   external int rows;
-  @c_int()
+  @UnsignedInt()
   external int width;
-  @c_int()
+  @Int()
   external int pitch;
-  external Pointer<c_uchar> buffer;
-  @c_short()
+  external Pointer<UnsignedChar> buffer;
+  @Short()
   external int num_grays;
-  @c_char()
+  @UnsignedChar()
   external int pixel_mode;
-  @c_char()
+  @UnsignedChar()
   external int palette_mode;
-  external Pointer<c_void> palette;
+  external Pointer<Void> palette;
 }
 
 extension FT_BitmapEx on FT_Bitmap {
   List<int> get bufferAsList {
     final pitch = this.pitch;
     final rows = this.rows;
-    final bufferPointer = this.buffer;
-    final buffer = bufferPointer.asTypedList((pitch * rows).toInt());
+   
+    final buffer = this.buffer.cast<Int8>().asTypedList((pitch * rows).toInt());
     return buffer;
   }
 }

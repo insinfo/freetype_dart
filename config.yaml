@@ -1,0 +1,15 @@
+output: 'lib/src/generated_bindings.dart'
+name: 'FreetypeBinding'
+description: 'Freetype binding for dart'
+llvm-path:  
+  - 'C:\llvm'
+headers:
+  entry-points:   
+    #- 'freetype/include/ft2build.h'         
+    - 'freetype/include/freetype/freetype.h' 
+    - 'freetype/include/freetype/ftglyph.h' 
+    - 'freetype/include/freetype/ftsystem.h'       
+  include-directives:
+    - 'freetype/include/**'
+    - 'freetype/include/freetype/**'
+    - 'freetype/include/ft2build.h'

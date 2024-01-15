@@ -26,8 +26,17 @@ extension StringUtf8Pointer on String {
     return result.cast();
   }
 
-  /// Returns *const c_char
+  /// Returns *const char
   Pointer<Int8> asInt8({Allocator allocator = malloc}) {
+    final units = utf8.encode(this);
+    final Pointer<Uint8> result = allocator<Uint8>(units.length + 1);
+    final Uint8List nativeString = result.asTypedList(units.length + 1);
+    nativeString.setAll(0, units);
+    nativeString[units.length] = 0;
+    return result.cast();
+  }
+  /// Returns * char
+  Pointer<Char> asCharP({Allocator allocator = malloc}) {
     final units = utf8.encode(this);
     final Pointer<Uint8> result = allocator<Uint8>(units.length + 1);
     final Uint8List nativeString = result.asTypedList(units.length + 1);

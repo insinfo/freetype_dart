@@ -14,69 +14,123 @@ import 'stream_rec_.dart';
 import 'tt_os2.dart';
 import 'tt_postscript.dart';
 
-// c types
+// c void type
 typedef c_void = Void;
-typedef c_schar = Int8; //i8
-typedef c_uchar = Uint8; //u8
-typedef c_short = Int16; //i16
-typedef c_ushort = Uint16; //u16
-typedef c_int = Int32; //i32
-typedef c_uint = Uint32; //u32
+/// signed char
+typedef c_schar = SignedChar; //i8
+/// unsigned char
+typedef c_uchar = UnsignedChar; //u8
+/// signed short
+typedef c_short = Short; //i16
+/// signed short
+typedef c_ushort = UnsignedShort; //u16
+/// signed int
+typedef c_int = Int; //i32
+/// unsigned int
+typedef c_uint = UnsignedInt; //u32
+/// float
 typedef c_float = Float; //f32
+/// double
 typedef c_double = Double; //f64
-typedef c_longlong = Int64; //i64
-typedef c_ulonglong = Uint64; //u64
-typedef intmax_t = Int64; //i64
-typedef uintmax_t = Uint64; //u64
-
+/// signed long long
+typedef c_longlong = LongLong; //i64
+/// unsigned long long
+typedef c_ulonglong = UnsignedLongLong; //u64
+/// size_t 
 typedef size_t = Size; //usize
-typedef ptrdiff_t = IntPtr; //isize
-typedef intptr_t = IntPtr; //isize
-typedef uintptr_t = IntPtr; //usize
-typedef ssize_t = IntPtr; //isize
-typedef sighandler_t = IntPtr; //usize
+/// char
+typedef c_char = Char; //i8
+/// signed long
+typedef c_long = Long; //i32
+/// unsigned long
+typedef c_ulong = UnsignedLong; //u32
+/// wchar_t
+typedef wchar_t = WChar; //u16
 
-typedef c_char = Int8; //i8
-typedef c_long = Int32; //i32
-typedef c_ulong = Uint32; //u32
-typedef wchar_t = Uint16; //u16
-
-typedef clock_t = Int32; //i32
-
-typedef errno_t = c_int; // Aliasing c_int
+//typedef intmax_t = Int64; //i64
+//typedef uintmax_t = Uint64; //u64
+//typedef ptrdiff_t = IntPtr; //isize
+//typedef intptr_t = IntPtr; //isize
+//typedef uintptr_t = IntPtr; //usize
+//typedef ssize_t = IntPtr; //isize
+//typedef sighandler_t = IntPtr; //usize
+//typedef clock_t = Int32; //i32
+//typedef errno_t = c_int; // Aliasing c_int
 
 // Basic Data Types
-typedef FT_Byte = c_uchar;
-typedef FT_Bytes = Pointer<FT_Byte>; //*const FT_Byte;
-typedef FT_Char = c_char;
-typedef FT_Int = c_int;
-typedef FT_UInt = c_uint;
-typedef FT_Int16 = c_short;
-typedef FT_UInt16 = c_ushort;
-typedef FT_Int32 = Int32;
-typedef FT_UInt32 = Uint32;
-typedef FT_Int64 = Int64;
-typedef FT_UInt64 = Uint64;
-typedef FT_Short = c_short;
-typedef FT_UShort = c_ushort;
-typedef FT_Long = c_long;
-typedef FT_ULong = c_ulong;
-typedef FT_Bool = c_uchar;
-typedef FT_Offset = size_t;
-typedef FT_PtrDist = ptrdiff_t;
-typedef FT_String = c_char;
-typedef FT_Tag = FT_UInt32;
-typedef FT_Error = c_int;
-typedef FT_Fixed = c_long;
-typedef FT_Pointer = Pointer<Void>; // Mutable pointer to void *mut c_void;
-typedef FT_Pos = c_long;
-typedef FT_FWord = c_short;
-typedef FT_UFWord = c_ushort;
-typedef FT_F2Dot14 = c_short;
-typedef FT_F26Dot6 = c_long;
-typedef FT_Encoding = c_uint;
 
+/// size 1 typedef unsigned char  FT_Byte;
+typedef FT_Byte = c_uchar;
+
+/// size 8 typedef const FT_Byte*  FT_Bytes;
+typedef FT_Bytes = Pointer<FT_Byte>;
+
+/// typedef signed char  FT_Char;
+typedef FT_Char = c_char;
+
+///  size 4 typedef signed int  FT_Int;
+typedef FT_Int = Int;
+///  size 4 typedef unsigned int  FT_UInt; 
+typedef FT_UInt = UnsignedInt;
+///  size 2 typedef signed short  FT_Int16; A typedef for a 16bit signed integer type.
+typedef FT_Int16 = Short;
+///  size 2 typedef unsigned short  FT_UInt16; A typedef for a 16bit unsigned integer type.
+typedef FT_UInt16 = UnsignedShort;
+///  size 4 typedef signed XXX  FT_Int32; A typedef for a 32bit signed integer type. The size depends on the configuration.
+typedef FT_Int32 = Int;
+///  size 4 typedef unsigned XXX  FT_UInt32;
+typedef FT_UInt32 = Uint32;
+/// typedef signed XXX  FT_Int64; 
+/// size 8 #define FT_INT64   long long int
+typedef FT_Int64 = LongLong;
+/// size 8 typedef unsigned XXX  FT_UInt64;
+typedef FT_UInt64 = UnsignedLongLong;
+/// size 2 typedef signed short  FT_Short;
+typedef FT_Short = Short;
+/// size 2 typedef unsigned short  FT_UShort;
+typedef FT_UShort = UnsignedShort;
+/// size 8 typedef signed long    FT_Long;
+typedef FT_Long = Int64;//Long;
+/// size 8 typedef unsigned long  FT_ULong;
+typedef FT_ULong = Int64;//UnsignedLong;
+/// size 1 typedef unsigned char  FT_Bool;
+typedef FT_Bool = UnsignedChar;
+/// size 8 typedef size_t  FT_Offset;
+typedef FT_Offset = Size;
+// size 1 typedef FT_PtrDist = ptrdiff_t;
+typedef FT_String = c_char;
+///  size 4 typedef FT_UInt32  FT_Tag;
+typedef FT_Tag = FT_UInt32;
+/// size 4 typedef int  FT_Error;
+typedef FT_Error = Int;
+/// size 8 typedef signed long  FT_Fixed;
+typedef FT_Fixed = Int64;//Long;
+/// size 8 typedef void*  FT_Pointer;
+typedef FT_Pointer = Pointer<Void>; // Mutable pointer to void *mut c_void;
+/// typedef signed long  FT_Pos;
+// TODO check size FT_Pos == Long ?
+typedef FT_Pos = Int64;//Long;
+/// size 2  typedef signed short  FT_FWord; 
+typedef FT_FWord = Short;
+/// size 2 typedef unsigned short  FT_UFWord; 
+typedef FT_UFWord = UnsignedShort;
+/// size 2 typedef signed short  FT_F2Dot14;
+typedef FT_F2Dot14 = Short;
+/// size 8 typedef signed long  FT_F26Dot6;
+typedef FT_F26Dot6 = Int64;//Long;
+/// size 4
+typedef FT_Encoding = c_uint;
+/// size 4
 typedef FT_Size_Request_Type = c_uint;
+
+abstract class FT_Size_Request_Type_ {
+  static const int FT_SIZE_REQUEST_TYPE_NOMINAL = 0;
+  static const int FT_SIZE_REQUEST_TYPE_REAL_DIM = 1;
+  static const int FT_SIZE_REQUEST_TYPE_BBOX = 2;
+  static const int FT_SIZE_REQUEST_TYPE_CELL = 3;
+  static const int FT_SIZE_REQUEST_TYPE_SCALES = 4;
+  static const int FT_SIZE_REQUEST_TYPE_MAX = 5;
+}
 
 typedef FT_Generic_Finalizer
     = Pointer<NativeFunction<FT_Generic_FinalizerFunction>>;
@@ -132,15 +186,26 @@ typedef DartFT_Realloc_FuncFunction = Pointer<Void> Function(
 
 // Internal Types
 final class FT_LibraryRec extends Opaque {}
+
 final class FT_ModuleRec extends Opaque {}
+
 final class FT_DriverRec extends Opaque {}
+
 final class FT_RendererRec extends Opaque {}
+
 final class FT_Size_InternalRec extends Opaque {}
+
 final class FT_SubGlyphRec extends Opaque {}
+
+
+/// An opaque handle to an FT_Slot_InternalRec structure, used to model private data of a given FT_GlyphSlot object.
 final class FT_Slot_InternalRec extends Opaque {}
+
 final class FT_Face_InternalRec extends Opaque {}
+
 final class FT_StrokerRec extends Opaque {}
-final class FT_DriverRec_ extends Opaque {}
+
+
 
 //typedef *mut = Pointer;
 
@@ -161,10 +226,14 @@ typedef FT_Size = Pointer<FT_SizeRec>;
 typedef FT_GlyphSlot = Pointer<FT_GlyphSlotRec>;
 typedef FT_CharMap = Pointer<FT_CharMapRec>;
 typedef FT_Module = Pointer<FT_ModuleRec>;
+/// A handle to a given FreeType font driver object. A font driver is a module capable of creating faces from font files.
 typedef FT_Driver = Pointer<FT_DriverRec>;
 typedef FT_Renderer = Pointer<FT_RendererRec>;
+/// size 8
 typedef FT_Size_Internal = Pointer<FT_Size_InternalRec>;
+///  typedef struct FT_SubGlyphRec_*  FT_SubGlyph;
 typedef FT_SubGlyph = Pointer<FT_SubGlyphRec>;
+/// size 8 An opaque handle to an FT_Slot_InternalRec structure, used to model private data of a given FT_GlyphSlot object.
 typedef FT_Slot_Internal = Pointer<FT_Slot_InternalRec>;
 typedef FT_Size_Request = Pointer<FT_Size_RequestRec>;
 typedef FT_Face_Internal = Pointer<FT_Face_InternalRec>;
@@ -177,5 +246,5 @@ typedef FT_OutlineGlyph = Pointer<FT_OutlineGlyphRec>;
 typedef FT_Stroker = Pointer<FT_StrokerRec>;
 typedef TT_OS2_Internal = Pointer<TT_OS2>;
 typedef TT_Postscript_Internal = Pointer<TT_Postscript>;
-
+/// size  4
 typedef FT_Glyph_Format = c_uint;

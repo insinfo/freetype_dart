@@ -11,7 +11,21 @@ import 'typedefs.dart';
 //     pub vertBearingY: FT_Pos,
 //     pub vertAdvance: FT_Pos,
 // }
+
+//  typedef struct  FT_Glyph_Metrics_
+//   {
+//     FT_Pos  width;
+//     FT_Pos  height;
+//     FT_Pos  horiBearingX;
+//     FT_Pos  horiBearingY;
+//     FT_Pos  horiAdvance;
+//     FT_Pos  vertBearingX;
+//     FT_Pos  vertBearingY;
+//     FT_Pos  vertAdvance;
+//   } FT_Glyph_Metrics;
+
 /// size 32
+/// c++ 64
 final class FT_Glyph_Metrics extends Struct {
   @FT_Pos()
   external int width;
