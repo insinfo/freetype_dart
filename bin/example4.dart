@@ -58,7 +58,7 @@ void main(List<String> args) {
   final png = img.encodePng(image);
   File('image4.png').writeAsBytesSync(png);
 
-  //face.free();
+  face.free();
   ft.free();
 }
 
