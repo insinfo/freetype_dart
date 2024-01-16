@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:freetype_dart/src/structs/stream_desc_.dart';
+
 import 'bitmap_glyph_rec.dart';
 import 'char_map_rec.dart';
 import 'face_rec.dart';
@@ -138,11 +140,7 @@ typedef FT_Generic_Finalizer
 typedef FT_Generic_FinalizerFunction = Void Function(Pointer<Void> object);
 typedef DartFT_Generic_FinalizerFunction = void Function(Pointer<Void> object);
 
-final class FT_StreamDesc_ extends Union {
-  @Long()
-  external int value;
-  external Pointer<Void> pointer;
-}
+
 
 /// I / O   M A N A G E M E N T
 typedef FT_StreamDesc = FT_StreamDesc_;

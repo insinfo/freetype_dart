@@ -12,12 +12,27 @@ import 'typedefs.dart';
 //     pub cursor: *mut c_uchar,
 //     pub limit: *mut c_uchar,
 //}
+
+  // typedef struct  FT_StreamRec_
+  // {
+  //   unsigned char*       base;
+  //   unsigned long        size;
+  //   unsigned long        pos;
+  //   FT_StreamDesc        descriptor;
+  //   FT_StreamDesc        pathname;
+  //   FT_Stream_IoFunc     read;
+  //   FT_Stream_CloseFunc  close;
+  //   FT_Memory            memory;
+  //   unsigned char*       cursor;
+  //   unsigned char*       limit;
+  // } FT_StreamRec;
+
 /// size 72
 final class FT_StreamRec extends Struct {
-  external Pointer<c_uchar> base;
-  @c_ulong()
+  external Pointer<Char> base;
+  @UnsignedLong()
   external int size;
-  @c_ulong()
+  @UnsignedLong()
   external int pos;
   external FT_StreamDesc descriptor;
   external FT_StreamDesc pathname;

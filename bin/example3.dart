@@ -16,6 +16,7 @@ import 'package:freetype_dart/src/structs/generic.dart';
 import 'package:freetype_dart/src/structs/glyph_metrics.dart';
 import 'package:freetype_dart/src/structs/glyph_rec.dart';
 import 'package:freetype_dart/src/structs/glyph_slot_rec.dart';
+import 'package:freetype_dart/src/structs/list_rec.dart';
 import 'package:freetype_dart/src/structs/memory_rec.dart';
 import 'package:freetype_dart/src/structs/outline.dart';
 import 'package:freetype_dart/src/structs/size_metrics.dart';
@@ -79,10 +80,13 @@ void main(List<String> args) {
   print("FT_Size_Metrics size  ${sizeOf<FT_Size_Metrics>()}");
   print("FT_Size_Internal size  ${sizeOf<FT_Size_Internal>()}");
   print("FT_MemoryRec size  ${sizeOf<FT_MemoryRec>()}");
+  print("FT_Stream size  ${sizeOf<FT_Stream>()}");
+  print("FT_ListRec size  ${sizeOf<FT_ListRec>()}");
+
   //C:\msys64\mingw64\bin
   final path = r'libfreetype-6.dll';
   //Platform.isWindows ? 'freetype.dll' : 'libfreetype.so.6'
-  final dylib = DynamicLibrary.open('2.13.2/freetype.dll');
+  final dylib = DynamicLibrary.open('bin/2.12.1/freetype.dll');
 
   final ft = FeetypeBindings(dylib);
 
@@ -95,13 +99,15 @@ void main(List<String> args) {
 
   ft.FT_Add_Default_Modules(library.value);
 
-  final face = malloc<FT_Face>();
+  Pointer<FT_Face> face = malloc<FT_Face>();
   err = ft.FT_New_Face(library.value, "VeraMono.ttf".asCharP(), 0, face);
 
   if (err == FT_Err_Unknown_File_Format) {
     print("Font format is unsupported");
   } else if (err == 1) {
     print("Font file is missing or corrupted");
+  }else if(err == FT_Err_Invalid_Argument){
+    print("FT_New_Face Invalid Argument");
   }
   print("FT_New_Face $err");
 
@@ -117,29 +123,29 @@ void main(List<String> args) {
   //   charcode = ft.FT_Get_Next_Char(face.value, charcode, gid);
   // }
 
-  // Select a character to render
-//   var character = '3';
-//   int glyph_index = ft.FT_Get_Char_Index(face.value, character.codeUnitAt(0));
-//   if (glyph_index == 0) {
-//     print('código de caractere indefinido');
-//   }
-//   print("glyph_index $glyph_index");
+  //Select a character to render
+  var character = '3';
+  int glyph_index = ft.FT_Get_Char_Index(face.value, character.codeUnitAt(0));
+  if (glyph_index == 0) {
+    print('código de caractere indefinido');
+  }
+ print("glyph_index $glyph_index");
 // // Set font size in pixels
-//   err = ft.FT_Set_Pixel_Sizes(face.value, 0, HEIGHT);
-//   print("FT_Set_Pixel_Sizes $err");
+  err = ft.FT_Set_Pixel_Sizes(face.value, 0, HEIGHT);
+  print("FT_Set_Pixel_Sizes $err");
 //   //0,       16*64,   300,    300
 //   // 40 * 64, 0, 50, 0
 //   // err = ft.FT_Set_Char_Size(face.value, 0, 11 * 64 + 32, 0, 0);
 //   // print("FT_Set_Char_Size $err");
 
-//   err = ft.FT_Load_Glyph(face.value, glyph_index, FT_LOAD_DEFAULT);
-//   print("FT_Load_Glyph $err");
+ err = ft.FT_Load_Glyph(face.value, glyph_index, FT_LOAD_DEFAULT);
+   print("FT_Load_Glyph $err");
 
-//   print("face.value.ref.glyph ${face.value}");
+ print("face.value.ref.glyph ${face.value.ref.glyph}");
 
   // // Render the glyph to a bitmap
-  // err = ft.FT_Render_Glyph(face.value.ref.glyph, FT_RENDER_MODE_NORMAL);
-  //print("FT_Render_Glyph $err");
+ err = ft.FT_Render_Glyph(face.value.ref.glyph, FT_RENDER_MODE_NORMAL);
+print("FT_Render_Glyph $err");
   //FT_Bitmap bitmap = face.value.ref.glyph.ref.bitmap;
 
   //print(  "bitmap width ${bitmap.width} rows ${bitmap.rows} mode ${bitmap.pixel_mode} ${bitmap.pitch}");

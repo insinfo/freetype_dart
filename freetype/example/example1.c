@@ -218,9 +218,9 @@ printf("FT_F26Dot6 size %d \r\n", sizeof(FT_F26Dot6));
     printf("FT_SizeRec size %d \r\n", sizeof(FT_SizeRec));
 printf("FT_Size_Metrics size %d \r\n", sizeof(FT_Size_Metrics));
     printf("FT_Size_Internal size %d \r\n", sizeof(FT_Size_Internal));
- printf("FT_MemoryRec size %d \r\n", sizeof(FT_MemoryRec_));
-   
-   
+ //printf("FT_MemoryRec size %d \r\n", sizeof(FT_MemoryRec_));
+   // printf("FT_MemoryRec size %d \r\n", sizeof(FT_MemoryRec_));
+    printf("FT_ListRec size %d \r\n", sizeof(FT_ListRec));
    
     
   

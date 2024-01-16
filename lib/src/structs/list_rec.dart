@@ -4,7 +4,15 @@ import 'typedefs.dart';
 //     pub head: FT_ListNode,
 //     pub tail: FT_ListNode,
 // }
-/// size 16
+
+// typedef struct  FT_ListRec_
+// {
+//   FT_ListNode  head;
+//   FT_ListNode  tail;
+// } FT_ListRec;
+
+/// size 16 
+/// c++ size 16
 final class FT_ListRec extends Struct {
   external FT_ListNode head;
   external FT_ListNode tail;
