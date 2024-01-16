@@ -1,28 +1,31 @@
 name: freetype_dart
+version: 1.0.0
+description: freetype dart bindings
+homepage: https://github.com/insinfo/freetype_dart
+repository: https://github.com/insinfo/freetype_dart
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: ">=3.2.0 <4.0.0"
 
-dependencies: 
+dependencies:
   path: ^1.9.0
   image: ^4.1.4
   ffi: ^2.1.0
   ffigen: ^11.0.0
-
+  
 #dev_dependencies:
-
 
 # ffigen:
 #   name: 'FreetypeBinding'
-#   llvm-path:  
+#   llvm-path:
 #     - 'C:\llvm'
 #   output: 'lib/src/generated_bindings.dart'
 #   headers:
-#     entry-points:            
-#       - 'C:\MyProjectsDart\freetype\include\freetype\freetype.h' 
-#       - 'C:\MyProjectsDart\freetype\include\freetype\ftglyph.h' 
+#     entry-points:
+#       - 'C:\MyProjectsDart\freetype\include\freetype\freetype.h'
+#       - 'C:\MyProjectsDart\freetype\include\freetype\ftglyph.h'
 #       - 'C:\MyProjectsDart\freetype\include\freetype\ftsystem.h'
-#       - 'C:\MyProjectsDart\freetype\include\freetype\ft2build.h'   
+#       - 'C:\MyProjectsDart\freetype\include\freetype\ft2build.h'
 #     include-directives:
 #       - 'C:\MyProjectsDart\freetype\include\**'
 

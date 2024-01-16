@@ -5,11 +5,12 @@ llvm-path:
   - 'C:\llvm'
 headers:
   entry-points:   
-    #- 'freetype/include/ft2build.h'         
+    - 'freetype/include/ft2build.h'         
     - 'freetype/include/freetype/freetype.h' 
     #- 'freetype/include/freetype/ftglyph.h' 
     #- 'freetype/include/freetype/ftsystem.h'  
     #- 'freetype/include/freetype/ftimage.h' 
+    #- 'freetype/include/freetype/fterrors.h' 
   include-directives:
     - 'freetype/include/**'
     - 'freetype/include/freetype/**'

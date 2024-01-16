@@ -13,7 +13,7 @@ const HEIGHT = 300;
 
 void main(List<String> args) {
   final dylib = DynamicLibrary.open(
-      Platform.isWindows ? 'bin/2.13.2/freetype.dll' : 'libfreetype.so.6');
+      Platform.isWindows ? 'libfreetype-6.dll' : 'libfreetype.so.6');
 
   final ft = FreetypeBinding(dylib);
 

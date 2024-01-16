@@ -10,7 +10,7 @@ import 'package:path/path.dart' show dirname, join;
 import '../errors.dart';
 
 // pacman -Syyu
-//
+
 /// Feetype high level API
 class Freetype implements Finalizable {
   String dllPath = r'libfreetype-6.dll';
@@ -50,16 +50,15 @@ class Freetype implements Finalizable {
     if (err != FT_Err_Ok) {
       throw Exception('Error on Init FreeType');
     }
-   
+
     _finalizer.attach(this, this);
   }
 
-  /// Open a font file using its pathname. `face_index` should be 0 if there is only 1 font
-  /// in the file.
+  /// Open a font file using its pathname. `face_index` should be 0 if there is only 1 font  in the file.
   Face newFace(String path, {int faceIndex = 0}) {
     Pointer<FT_Face> face = allocator<FT_Face>();
-    final pathP = path.asCharP(allocator: allocator);
-    final err = binding.FT_New_Face(raw.value, pathP, faceIndex, face);
+    final fontFilePathP = path.asCharP(allocator: allocator);
+    final err = binding.FT_New_Face(raw.value, fontFilePathP, faceIndex, face);
 
     if (err == FT_Err_Unknown_File_Format) {
       throw Exception("Font format is unsupported");
@@ -72,16 +71,17 @@ class Freetype implements Finalizable {
       face.value,
       binding,
       allocator,
+      fontFilePathP,
     );
   }
 
+  /// free memory
   void free() {
     if (_isFree) {
       return;
     }
     _isFree = true;
     _finalizer.detach(this);
-    //ftb.FT_Done_Library(raw.value);
     binding.FT_Done_FreeType(raw.value);
   }
 }
@@ -95,14 +95,16 @@ class Face {
   Allocator allocator;
 
   bool _isFree = false;
+  Pointer<Char> fontFilePathP;
 
   Face.fromRaw(
     this.library_raw,
     this.raw,
     this.binding,
-    this.allocator, {
+    this.allocator,
+    this.fontFilePathP, {
     this.bytes,
-  }) {  
+  }) {
     glyph = GlyphSlot.fromRaw(library_raw, raw.ref.glyph, binding);
   }
 
@@ -206,7 +208,7 @@ class Face {
       return;
     }
     _isFree = true;
-    //_finalizer.detach(this); 
+    //_finalizer.detach(this);
     binding.FT_Done_Face(raw);
   }
 }
@@ -249,6 +251,66 @@ class RenderMode {
   static const LcdV = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_LCD_V);
   static const Sdf = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_SDF);
   static const Max = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_MAX);
+}
+
+///  An enumeration type used to describe the format of pixels in a given
+///  bitmap.  Note that additional formats may be added in the future.
+class PixelMode {
+  final int value;
+  const PixelMode(this.value);
+
+  /// FT_PIXEL_MODE_NONE
+  /// Value~0 is reserved.
+  static const NONE = const LoadFlag(0);
+
+  /// FT_PIXEL_MODE_MONO ::
+  /// A monochrome bitmap, using 1~bit per pixel.  Note that pixels are
+  /// stored in most-significant order (MSB), which means that the
+  /// left-most pixel in a byte has value 128.
+  static const MONO = const LoadFlag(1);
+
+  /// FT_PIXEL_MODE_GRAY ::
+  /// An 8-bit bitmap, generally used to represent anti-aliased glyph
+  /// images.  Each pixel is stored in one byte.  Note that the number of
+  /// 'gray' levels is stored in the `num_grays` field of the @FT_Bitmap
+  ///  structure (it generally is 256).
+  static const GRAY = const LoadFlag(2);
+
+  /// FT_PIXEL_MODE_GRAY2 ::
+  /// A 2-bit per pixel bitmap, used to represent embedded anti-aliased
+  /// bitmaps in font files according to the OpenType specification.  We
+  /// haven't found a single font using this format, however.
+  static const GRAY2 = const LoadFlag(3);
+
+  /// FT_PIXEL_MODE_GRAY4 ::
+  /// A 4-bit per pixel bitmap, representing embedded anti-aliased bitmaps
+  /// in font files according to the OpenType specification.  We haven't
+  /// found a single font using this format, however.
+  static const GRAY4 = const LoadFlag(4);
+
+  /// FT_PIXEL_MODE_LCD ::
+  /// An 8-bit bitmap, representing RGB or BGR decimated glyph images used
+  /// for display on LCD displays; the bitmap is three times wider than
+  /// the original glyph image.  See also @FT_RENDER_MODE_LCD.
+  static const LCD = const LoadFlag(5);
+
+  /// FT_PIXEL_MODE_LCD_V ::
+  /// An 8-bit bitmap, representing RGB or BGR decimated glyph images used
+  /// for display on rotated LCD displays; the bitmap is three times
+  /// taller than the original glyph image.  See also
+  /// @FT_RENDER_MODE_LCD_V.
+  static const LCDV = const LoadFlag(6);
+
+  /// FT_PIXEL_MODE_BGRA ::
+  /// [Since 2.5] An image with four 8-bit channels per pixel,
+  /// representing a color image (such as emoticons) with alpha channel.
+  /// For each pixel, the format is BGRA, which means, the blue channel
+  /// comes first in memory.  The color channels are pre-multiplied and in
+  /// the sRGB colorspace.  For example, full red at half-translucent
+  /// opacity will be represented as '00,00,80,80', not '00,00,FF,80'.
+  /// See also @FT_LOAD_COLOR.
+  static const BGRA = const LoadFlag(7);
+  static const MAX = const LoadFlag(8);
 }
 
 class GlyphSlot {
@@ -306,7 +368,9 @@ class Bitmap {
   List<int> get buffer {
     final bufferSize = pitch * rows;
     if (bufferSize > 0) {
-      return slot.ref.bitmap.buffer.cast<Int8>().asTypedList((pitch * rows).toInt());
+      return slot.ref.bitmap.buffer
+          .cast<Int8>()
+          .asTypedList((pitch * rows).toInt());
     } else {
       return <int>[];
     }

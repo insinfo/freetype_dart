@@ -1,18 +1,14 @@
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-//import 'package:freetype_dart/src/constants.dart';
 import 'package:freetype_dart/src/errors.dart';
 import 'package:freetype_dart/src/extensions/extensions.dart';
 import 'package:freetype_dart/src/generated_bindings.dart';
-
 import 'dart:io';
 import 'package:image/image.dart' as img;
 
-
-
 void main(List<String> args) {
   final dylib = DynamicLibrary.open(
-      Platform.isWindows ? 'bin/2.13.2/freetype.dll' : 'libfreetype.so.6');
+      Platform.isWindows ? 'libfreetype-6.dll' : 'libfreetype.so.6');
 
   final ft = FreetypeBinding(dylib);
 
@@ -36,10 +32,9 @@ void main(List<String> args) {
   err = ft.FT_Select_Charmap(face.value, ft_encoding_unicode);
   print("FT_Select_Charmap $err");
 
-  Pointer<FT_UInt> gid = calloc<FT_UInt>();
-
-  var charcode = ft.FT_Get_First_Char(face.value, gid);
-  print("charcode $charcode ${gid.value}");
+  //Pointer<FT_UInt> gid = calloc<FT_UInt>();
+  //var charcode = ft.FT_Get_First_Char(face.value, gid);
+  //print("charcode $charcode ${gid.value}");
   // while (gid.value != 0) {
   //   print("Codepoint: $charcode, glyph_index: ${gid.value}");
   //   charcode = ft.FT_Get_Next_Char(face.value, charcode, gid);
@@ -64,7 +59,8 @@ void main(List<String> args) {
   print("FT_Load_Glyph $err");
 
   // // Render the glyph to a bitmap
-  err = ft.FT_Render_Glyph(face.value.ref.glyph, FT_Render_Mode_.FT_RENDER_MODE_NORMAL);
+  err = ft.FT_Render_Glyph(
+      face.value.ref.glyph, FT_Render_Mode_.FT_RENDER_MODE_NORMAL);
   print("FT_Render_Glyph $err");
   FT_Bitmap bitmap = face.value.ref.glyph.ref.bitmap;
 
@@ -72,7 +68,7 @@ void main(List<String> args) {
       "bitmap width ${bitmap.width} rows ${bitmap.rows} mode ${bitmap.pixel_mode} ${bitmap.pitch}");
 
   var format = img.Format.uint8;
-  
+
   final buffer = bitmap.buffer
       .cast<Int8>()
       .asTypedList((bitmap.pitch * bitmap.rows).toInt());

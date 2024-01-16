@@ -1,9 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
-
 import 'package:ffi/ffi.dart';
 import 'package:freetype_dart/src/errors.dart';
-
 import 'package:freetype_dart/src/extensions/extensions.dart';
 import 'package:freetype_dart/src/generated_bindings.dart';
 

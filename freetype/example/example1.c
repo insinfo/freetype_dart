@@ -166,63 +166,7 @@ main( int     argc,
 
   show_image();
 
-  printf("before FT_Done_Face\r\n");
-  printf("FT_Fixed size %d \r\n", sizeof(FT_Fixed));
-  printf("FT_Int size %d \r\n", sizeof(FT_Int));
- printf("FT_UInt size %d \r\n", sizeof(FT_UInt));
- printf("FT_Int16 size %d \r\n", sizeof(FT_Int16));
-  printf("FT_UInt16 size %d \r\n", sizeof(FT_UInt16));
-  printf("FT_Int32 size %d \r\n", sizeof(FT_Int32));
-  printf("FT_UInt32 size %d \r\n", sizeof(FT_UInt32));
- printf("FT_Int64 size %d \r\n", sizeof(FT_Int64));
-  printf("FT_UInt64 size %d \r\n", sizeof(FT_UInt64));
-  printf("FT_Short size %d \r\n", sizeof(FT_Short));
-  printf("FT_UShort size %d \r\n", sizeof(FT_UShort));
-  printf("FT_Byte size %d \r\n", sizeof(FT_Byte));
-printf("FT_Bytes size %d \r\n", sizeof(FT_Bytes));
-  printf("FT_Long size %d \r\n", sizeof(FT_Long));
-printf("FT_ULong size %d \r\n", sizeof(FT_ULong));
-printf("FT_Bool size %d \r\n", sizeof(FT_Bool));
-printf("FT_Offset size %d \r\n", sizeof(FT_Offset));
-printf("FT_String size %d \r\n", sizeof(FT_String));
-printf("FT_Tag size %d \r\n", sizeof(FT_Tag));
-printf("FT_Error size %d \r\n", sizeof(FT_Error));
-printf("FT_Pointer size %d \r\n", sizeof(FT_Pointer));
-printf("FT_FWord size %d \r\n", sizeof(FT_FWord));
-printf("FT_UFWord size %d \r\n", sizeof(FT_UFWord));
-printf("FT_F2Dot14 size %d \r\n", sizeof(FT_F2Dot14));
-printf("FT_F26Dot6 size %d \r\n", sizeof(FT_F26Dot6));  
-  printf("FT_FaceRec size %d \r\n", sizeof(FT_FaceRec));
-  printf("FT_Long size %d \r\n", sizeof(FT_Long));
-  printf("FT_Bitmap_Size size %d \r\n", sizeof(FT_Bitmap_Size));
-  printf("FT_CharMapRec size %d \r\n", sizeof(FT_CharMapRec));
-  printf("FT_Generic size %d \r\n", sizeof(FT_Generic));
-  printf("FT_Short size %d \r\n", sizeof(FT_Short));
-  printf("FT_Pos size %d \r\n", sizeof(FT_Pos));
- printf("FT_Encoding size %d \r\n", sizeof(FT_Encoding));
- printf("FT_CharMapRec size %d \r\n", sizeof(FT_CharMapRec));
- printf("FT_Size_Request_Type_ size %d \r\n", sizeof(FT_Size_Request_Type));
-
- printf("FT_BBox size %d \r\n", sizeof(FT_BBox));
- printf("FT_BitmapGlyphRec size %d \r\n", sizeof(FT_BitmapGlyphRec));
-  printf("FT_GlyphRec size %d \r\n", sizeof(FT_GlyphRec));
-  printf("FT_Glyph_Format size %d \r\n", sizeof(FT_Glyph_Format));
-  printf("FT_Vector size %d \r\n", sizeof(FT_Vector));
-  printf("FT_Bitmap size %d \r\n", sizeof(FT_Bitmap));
-  printf("FT_Vector pen size %d \r\n", sizeof(pen));
-  printf("FT_GlyphSlotRec size %d \r\n", sizeof(FT_GlyphSlotRec));
-   printf("FT_Glyph_Metrics size %d \r\n", sizeof(FT_Glyph_Metrics));
-   printf("FT_Outline size %d \r\n", sizeof(FT_Outline));
-   printf("Long size %d \r\n", sizeof(long));
-  printf("FT_Slot_Internal size %d \r\n", sizeof(FT_Slot_Internal));
-    printf("FT_SizeRec size %d \r\n", sizeof(FT_SizeRec));
-printf("FT_Size_Metrics size %d \r\n", sizeof(FT_Size_Metrics));
-    printf("FT_Size_Internal size %d \r\n", sizeof(FT_Size_Internal));
- //printf("FT_MemoryRec size %d \r\n", sizeof(FT_MemoryRec_));
-   // printf("FT_MemoryRec size %d \r\n", sizeof(FT_MemoryRec_));
-    printf("FT_ListRec size %d \r\n", sizeof(FT_ListRec));
-   
-    
+     
   
   FT_Done_Face    ( face );
   FT_Done_FreeType( library );
