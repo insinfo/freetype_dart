@@ -1,21 +1,13 @@
 import 'dart:ffi';
 import 'dart:io';
-
 import 'package:ffi/ffi.dart';
-
 import 'package:freetype_dart/src/extensions/extensions.dart';
-import 'package:freetype_dart/src/structs/matrix.dart';
-import 'package:freetype_dart/src/structs/vector.dart';
-
-import '../bindings_manual.dart';
-import '../structs/bitmap.dart';
-import '../structs/constants.dart';
-import '../structs/errors.dart';
-
-import '../structs/typedefs.dart';
+import 'package:freetype_dart/src/generated_bindings.dart';
 
 // ignore: unused_import
 import 'package:path/path.dart' show dirname, join;
+
+import '../errors.dart';
 
 // pacman -Syyu
 //
@@ -25,8 +17,8 @@ class Freetype implements Finalizable {
 
   late DynamicLibrary dylib;
   Allocator allocator = calloc;
-  late FeetypeBindings binding;
-  late Pointer<Pointer<FT_LibraryRec>> raw;
+  late FreetypeBinding binding;
+  late Pointer<Pointer<FT_LibraryRec_>> raw;
 
   ///   Used to prevent double free and usage after free.
   bool _isFree = false;
@@ -51,16 +43,14 @@ class Freetype implements Finalizable {
       dylib = dl;
     }
 
-    binding = FeetypeBindings(dylib);
-    raw = allocator<FT_Library>();
+    binding = FreetypeBinding(dylib);
+    raw = allocator<Pointer<FT_LibraryRec_>>();
 
     final err = binding.FT_Init_FreeType(raw);
     if (err != FT_Err_Ok) {
       throw Exception('Error on Init FreeType');
     }
-
-    binding.FT_Add_Default_Modules(raw.value);
-
+   
     _finalizer.attach(this, this);
   }
 
@@ -100,7 +90,7 @@ class Face {
   FT_Library library_raw;
   FT_Face raw;
   late GlyphSlot glyph;
-  FeetypeBindings binding;
+  FreetypeBinding binding;
   dynamic bytes;
   Allocator allocator;
 
@@ -112,8 +102,7 @@ class Face {
     this.binding,
     this.allocator, {
     this.bytes,
-  }) {
-    binding.FT_Reference_Library(library_raw);
+  }) {  
     glyph = GlyphSlot.fromRaw(library_raw, raw.ref.glyph, binding);
   }
 
@@ -253,19 +242,19 @@ class LoadFlag {
 class RenderMode {
   final int value;
   const RenderMode(this.value);
-  static const Normal = const LoadFlag(FT_RENDER_MODE_NORMAL);
-  static const Light = const LoadFlag(FT_RENDER_MODE_LIGHT);
-  static const Mono = const LoadFlag(FT_RENDER_MODE_MONO);
-  static const Lcd = const LoadFlag(FT_RENDER_MODE_LCD);
-  static const LcdV = const LoadFlag(FT_RENDER_MODE_LCD_V);
-  static const Sdf = const LoadFlag(FT_RENDER_MODE_SDF);
-  static const Max = const LoadFlag(FT_RENDER_MODE_MAX);
+  static const Normal = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_NORMAL);
+  static const Light = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_LIGHT);
+  static const Mono = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_MONO);
+  static const Lcd = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_LCD);
+  static const LcdV = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_LCD_V);
+  static const Sdf = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_SDF);
+  static const Max = const LoadFlag(FT_Render_Mode_.FT_RENDER_MODE_MAX);
 }
 
 class GlyphSlot {
   FT_Library library_raw;
   FT_GlyphSlot raw;
-  FeetypeBindings binding;
+  FreetypeBinding binding;
 
   GlyphSlot.fromRaw(
     this.library_raw,

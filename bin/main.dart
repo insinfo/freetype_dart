@@ -2,12 +2,10 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
-import 'package:freetype_dart/src/bindings_manual.dart';
+import 'package:freetype_dart/src/errors.dart';
+
 import 'package:freetype_dart/src/extensions/extensions.dart';
-import 'package:freetype_dart/src/structs/bitmap.dart';
-import 'package:freetype_dart/src/structs/constants.dart';
-import 'package:freetype_dart/src/structs/errors.dart';
-import 'package:freetype_dart/src/structs/typedefs.dart';
+import 'package:freetype_dart/src/generated_bindings.dart';
 
 void main(List<String> args) {
   //print('size ${sizeOf<FT_Vector>()}');
@@ -15,7 +13,7 @@ void main(List<String> args) {
   final dylib = DynamicLibrary.open(
       Platform.isWindows ? 'freetype.dll' : 'libfreetype.so.6');
 
-  final ft = FeetypeBindings(dylib);
+  final ft = FreetypeBinding(dylib);
 
   final library = calloc<FT_Library>();
 
@@ -24,9 +22,6 @@ void main(List<String> args) {
     print('err on Init FreeType');
   }
   print('FT_Init_FreeType $err');
-
-  ft.FT_Add_Default_Modules(library.value);
-  print('FT_Add_Default_Modules $err');
 
   final face = calloc<FT_Face>();
   err = ft.FT_New_Face(library.value, "VeraMono.ttf".asCharP(), 0, face);

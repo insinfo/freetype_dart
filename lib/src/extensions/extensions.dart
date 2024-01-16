@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
+import 'package:freetype_dart/src/generated_bindings.dart';
 
 /// Extension method for converting a [String] to a `Pointer<Utf8>`.
 extension StringUtf8Pointer on String {
@@ -92,5 +93,15 @@ extension CharPointerExtension on Pointer<Char> {
       throw UnsupportedError(
           "Operation '$operation' not allowed on a 'nullptr'.");
     }
+  }
+}
+
+extension FT_BitmapEx on FT_Bitmap {
+  List<int> get bufferAsList {
+    final pitch = this.pitch;
+    final rows = this.rows;
+   
+    final buffer = this.buffer.cast<Int8>().asTypedList((pitch * rows).toInt());
+    return buffer;
   }
 }

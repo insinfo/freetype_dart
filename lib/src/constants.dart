@@ -1,5 +1,4 @@
 // Constants
-import 'typedefs.dart';
 
 const FT_FACE_FLAG_SCALABLE = 1;
 const FT_FACE_FLAG_FIXED_SIZES = 1 << 1;
@@ -34,7 +33,7 @@ const FT_SUBGLYPH_FLAG_XY_SCALE = 0x40;
 const FT_SUBGLYPH_FLAG_2X2 = 0x80;
 const FT_SUBGLYPH_FLAG_USE_MY_METRICS = 0x200;
 
-const FT_LOAD_DEFAULT = 0x0;
+
 const FT_LOAD_NO_SCALE = 0x1;
 const FT_LOAD_NO_HINTING = 0x1 << 1;
 const FT_LOAD_RENDER = 0x1 << 2;
@@ -95,7 +94,6 @@ const FT_GLYPH_FORMAT_BITMAP = 1651078259;
 const FT_GLYPH_FORMAT_OUTLINE = 1869968492;
 const FT_GLYPH_FORMAT_PLOTTER = 1886154612;
 
-typedef FT_Render_Mode = c_uint;
 const FT_RENDER_MODE_NORMAL = 0;
 const FT_RENDER_MODE_LIGHT = 1;
 const FT_RENDER_MODE_MONO = 2;
@@ -104,7 +102,6 @@ const FT_RENDER_MODE_LCD_V = 4;
 const FT_RENDER_MODE_SDF = 5;
 const FT_RENDER_MODE_MAX = FT_RENDER_MODE_SDF + 1;
 
-typedef FT_LcdFilter = c_uint;
 const FT_LCD_FILTER_NONE = 0;
 const FT_LCD_FILTER_DEFAULT = 1;
 const FT_LCD_FILTER_LIGHT = 3;

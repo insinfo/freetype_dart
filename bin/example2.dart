@@ -1,25 +1,20 @@
 import 'dart:ffi';
-
 import 'package:ffi/ffi.dart';
-import 'package:freetype_dart/src/bindings_manual.dart';
+//import 'package:freetype_dart/src/constants.dart';
+import 'package:freetype_dart/src/errors.dart';
 import 'package:freetype_dart/src/extensions/extensions.dart';
-import 'package:freetype_dart/src/structs/bitmap.dart';
-import 'package:freetype_dart/src/structs/constants.dart';
-import 'package:freetype_dart/src/structs/errors.dart';
-import 'package:freetype_dart/src/structs/typedefs.dart';
+import 'package:freetype_dart/src/generated_bindings.dart';
 
 import 'dart:io';
 import 'package:image/image.dart' as img;
 
-void printf(object) {
-  stdout.write(object);
-}
+
 
 void main(List<String> args) {
- final dylib = DynamicLibrary.open(
-      Platform.isWindows ? 'freetype.dll' : 'libfreetype.so.6');
+  final dylib = DynamicLibrary.open(
+      Platform.isWindows ? 'bin/2.13.2/freetype.dll' : 'libfreetype.so.6');
 
-  final ft = FeetypeBindings(dylib);
+  final ft = FreetypeBinding(dylib);
 
   final library = calloc<FT_Library>();
 
@@ -27,8 +22,6 @@ void main(List<String> args) {
   if (err != FT_Err_Ok) {
     print('err on Init FreeType');
   }
-
-  ft.FT_Add_Default_Modules(library.value);
 
   final face = calloc<FT_Face>();
   err = ft.FT_New_Face(library.value, "VeraMono.ttf".asCharP(), 0, face);
@@ -40,7 +33,7 @@ void main(List<String> args) {
   }
 
   // Ensure an unicode characater map is loaded
-  err = ft.FT_Select_Charmap(face.value, FT_ENCODING_UNICODE);
+  err = ft.FT_Select_Charmap(face.value, ft_encoding_unicode);
   print("FT_Select_Charmap $err");
 
   Pointer<FT_UInt> gid = calloc<FT_UInt>();
@@ -71,7 +64,7 @@ void main(List<String> args) {
   print("FT_Load_Glyph $err");
 
   // // Render the glyph to a bitmap
-  err = ft.FT_Render_Glyph(face.value.ref.glyph, FT_RENDER_MODE_NORMAL);
+  err = ft.FT_Render_Glyph(face.value.ref.glyph, FT_Render_Mode_.FT_RENDER_MODE_NORMAL);
   print("FT_Render_Glyph $err");
   FT_Bitmap bitmap = face.value.ref.glyph.ref.bitmap;
 
@@ -79,20 +72,10 @@ void main(List<String> args) {
       "bitmap width ${bitmap.width} rows ${bitmap.rows} mode ${bitmap.pixel_mode} ${bitmap.pitch}");
 
   var format = img.Format.uint8;
-  switch (bitmap.palette_mode) {
-    case FT_PIXEL_MODE_MONO:
-      format = img.Format.uint1;
-      break;
-    case FT_PIXEL_MODE_GRAY:
-      format = img.Format.uint8;
-      break;
-    case FT_PIXEL_MODE_BGRA:
-      format = img.Format.uint32;
-      break;
-  }
-
-  final buffer =
-      bitmap.buffer.cast<Int8>().asTypedList((bitmap.pitch * bitmap.rows).toInt());
+  
+  final buffer = bitmap.buffer
+      .cast<Int8>()
+      .asTypedList((bitmap.pitch * bitmap.rows).toInt());
 
   // Create a 256x256 8-bit (default) rgb (default) image.
   final image = img.Image.fromBytes(
@@ -106,4 +89,7 @@ void main(List<String> args) {
   final png = img.encodePng(image);
   // Write the PNG formatted data to a file.
   File('image.png').writeAsBytesSync(png);
+
+  ft.FT_Done_Face(face.value);
+  ft.FT_Done_FreeType(library.value);
 }
